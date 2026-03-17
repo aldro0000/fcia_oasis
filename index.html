@@ -11,25 +11,22 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap"
     rel="stylesheet"
   />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+
   <header class="topbar">
     <div class="container topbar-content">
-      <div class="logo-box">
+      <a href="#inicio" class="logo-box">
         <img src="fotoo.png" alt="Farmacia Oasis" class="logo-img" />
-        <div>
+        <div class="brand-wrap">
           <h1 class="brand">Farmacia Oasis</h1>
           <p class="brand-sub">Farmacia y Laboratorio</p>
         </div>
-      </div>
-
-      <button class="menu-btn" id="menuBtn" aria-label="Abrir menú">
-        ☰
-      </button>
+      </a>
 
       <nav class="nav" id="nav">
         <a href="#inicio">Inicio</a>
@@ -38,19 +35,42 @@
         <a href="#opiniones">Opiniones</a>
         <a href="#contacto">Contacto</a>
       </nav>
+
+      <div class="topbar-actions">
+        <a
+          class="topbar-btn"
+          href="https://wa.me/541153324146"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          WhatsApp
+        </a>
+
+        <button class="menu-btn" id="menuBtn" aria-label="Abrir menú">
+          ☰
+        </button>
+      </div>
     </div>
   </header>
 
   <main>
     <section class="hero" id="inicio">
-      <div class="overlay"></div>
+      <div class="hero-overlay"></div>
+
       <div class="container hero-content">
-        <div class="hero-text">
-          <span class="tag">Atención profesional y laboratorio propio</span>
-          <h2>Farmacia y Laboratorio Oasis</h2>
-          <p class="hero-lead">
-            Atención farmacéutica, fórmulas magistrales y productos de cuidado
-            personal con una imagen profesional, cercana y confiable.
+        <div class="hero-left">
+          <span class="hero-tag">Atención profesional · laboratorio propio · fórmulas magistrales</span>
+
+          <h2>
+            Salud, cercanía y
+            <span>atención personalizada</span>
+            en un solo lugar
+          </h2>
+
+          <p class="hero-text">
+            En Farmacia y Laboratorio Oasis combinamos experiencia farmacéutica,
+            preparados magistrales y una atención cálida para acompañar a cada
+            paciente con confianza y profesionalismo.
           </p>
 
           <div class="hero-buttons">
@@ -60,89 +80,139 @@
               target="_blank"
               rel="noopener noreferrer"
             >
-              Contactar por WhatsApp
+              Consultar por WhatsApp
             </a>
-            <a class="btn btn-secondary" href="#servicios">Ver servicios</a>
+
+            <a class="btn btn-light" href="#servicios">
+              Ver servicios
+            </a>
           </div>
 
-          <div class="hero-info">
-            <div class="info-item">
+          <div class="hero-stats">
+            <div class="hero-stat">
               <strong>4,3</strong>
-              <span>calificación en Google</span>
+              <span>Calificación en Google</span>
             </div>
-            <div class="info-item">
+            <div class="hero-stat">
               <strong>36</strong>
-              <span>opiniones</span>
+              <span>Opiniones</span>
             </div>
-            <div class="info-item">
+            <div class="hero-stat">
               <strong>Cabildo 4299</strong>
-              <span>Buenos Aires</span>
+              <span>Ciudad de Buenos Aires</span>
             </div>
           </div>
         </div>
 
-        <div class="hero-card">
-          <div class="card">
-            <p class="card-label">Información destacada</p>
+        <div class="hero-right">
+          <div class="hero-card">
+            <p class="mini-title">Por qué elegirnos</p>
             <h3>Tu farmacia de confianza en Buenos Aires</h3>
-            <ul>
+
+            <ul class="hero-list">
               <li>Fórmulas magistrales personalizadas</li>
-              <li>Excelente atención y buenos precios</li>
-              <li>Trabajamos con distintas obras sociales</li>
-              <li>Atención cercana y profesional</li>
+              <li>Atención cálida y profesional</li>
+              <li>Muy buenas opiniones de clientes</li>
+              <li>Dermocosmética y cuidado personal</li>
+              <li>Contacto rápido por WhatsApp</li>
             </ul>
+
+            <a
+              href="https://www.google.com/maps/search/?api=1&query=Av.+Cabildo+4299,+Buenos+Aires"
+              class="card-link"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Ver ubicación
+            </a>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="section about" id="nosotros">
-      <div class="container grid-2">
-        <div>
-          <p class="section-kicker">Nosotros</p>
-          <h2 class="section-title">Una farmacia con atención profesional y laboratorio propio</h2>
-          <p class="section-text">
-            En Farmacia Oasis combinamos la atención farmacéutica tradicional
-            con la elaboración de preparados personalizados. Trabajamos para
-            brindar soluciones confiables, una atención cálida y productos
-            adaptados a cada necesidad.
+    <section class="section intro-strip">
+      <div class="container intro-strip-content">
+        <div class="intro-item">
+          <span class="intro-icon">💊</span>
+          <div>
+            <h3>Atención farmacéutica</h3>
+            <p>Asesoramiento claro y responsable para cada paciente.</p>
+          </div>
+        </div>
+
+        <div class="intro-item">
+          <span class="intro-icon">🧪</span>
+          <div>
+            <h3>Laboratorio propio</h3>
+            <p>Preparados personalizados según indicación profesional.</p>
+          </div>
+        </div>
+
+        <div class="intro-item">
+          <span class="intro-icon">🌿</span>
+          <div>
+            <h3>Dermocosmética</h3>
+            <p>Cuidado facial, corporal y capilar con perfil profesional.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="nosotros">
+      <div class="container about-grid">
+        <div class="about-text">
+          <p class="section-tag">Nosotros</p>
+          <h2 class="section-title">
+            Una farmacia moderna con trato humano
+          </h2>
+          <p class="section-description">
+            En Farmacia Oasis trabajamos para brindar soluciones confiables,
+            atención personalizada y una experiencia cercana. Combinamos la
+            farmacia tradicional con laboratorio propio y productos orientados al
+            bienestar integral.
           </p>
-          <p class="section-text">
-            Nuestro objetivo es que cada persona encuentre asesoramiento,
-            calidad y cercanía, tanto en medicamentos como en fórmulas
-            magistrales y productos de dermocosmética.
+          <p class="section-description">
+            Nuestra propuesta une salud, confianza, calidad y asesoramiento para
+            que cada persona encuentre lo que necesita en un entorno profesional
+            y agradable.
           </p>
         </div>
 
-        <div class="feature-boxes">
-          <div class="feature-box">
+        <div class="about-cards">
+          <article class="small-card">
             <h3>Atención personalizada</h3>
-            <p>Escuchamos, orientamos y acompañamos a cada paciente.</p>
-          </div>
-          <div class="feature-box">
+            <p>Escuchamos, orientamos y acompañamos cada consulta.</p>
+          </article>
+
+          <article class="small-card">
             <h3>Fórmulas magistrales</h3>
-            <p>Preparados adaptados a indicación médica y necesidades específicas.</p>
-          </div>
-          <div class="feature-box">
-            <h3>Ubicación estratégica</h3>
-            <p>Estamos en Av. Cabildo 4299, Ciudad de Buenos Aires.</p>
-          </div>
-          <div class="feature-box">
+            <p>Preparados adaptados a necesidades específicas.</p>
+          </article>
+
+          <article class="small-card">
+            <h3>Excelente ubicación</h3>
+            <p>Estamos en Av. Cabildo 4299, CABA.</p>
+          </article>
+
+          <article class="small-card">
             <h3>Confianza real</h3>
-            <p>Opiniones positivas de clientes que valoran nuestra atención.</p>
-          </div>
+            <p>Clientes que valoran nuestra atención y compromiso.</p>
+          </article>
         </div>
       </div>
     </section>
 
-    <section class="section services" id="servicios">
+    <section class="section services-section" id="servicios">
       <div class="container">
-        <p class="section-kicker center">Servicios</p>
+        <p class="section-tag center">Servicios</p>
         <h2 class="section-title center">Qué ofrecemos</h2>
+        <p class="section-description center narrow">
+          Una propuesta integral que combina atención farmacéutica, preparados personalizados y cuidado diario.
+        </p>
 
-        <div class="cards-grid">
+        <div class="services-grid">
           <article class="service-card">
-            <div class="icon">🧪</div>
+            <div class="service-icon">🧪</div>
             <h3>Fórmulas magistrales</h3>
             <p>
               Elaboración de preparados personalizados, cremas, geles,
@@ -151,16 +221,16 @@
           </article>
 
           <article class="service-card">
-            <div class="icon">💊</div>
+            <div class="service-icon">💊</div>
             <h3>Atención farmacéutica</h3>
             <p>
-              Orientación profesional, atención responsable y acompañamiento
-              en cada consulta.
+              Orientación profesional, atención responsable y acompañamiento en
+              cada consulta.
             </p>
           </article>
 
           <article class="service-card">
-            <div class="icon">🌿</div>
+            <div class="service-icon">🌿</div>
             <h3>Dermocosmética</h3>
             <p>
               Productos de cuidado facial, corporal y capilar con enfoque
@@ -169,7 +239,7 @@
           </article>
 
           <article class="service-card">
-            <div class="icon">🏥</div>
+            <div class="service-icon">🏥</div>
             <h3>Obras sociales</h3>
             <p>
               Trabajamos con diferentes coberturas para brindar mayor
@@ -178,7 +248,7 @@
           </article>
 
           <article class="service-card">
-            <div class="icon">📍</div>
+            <div class="service-icon">📍</div>
             <h3>Atención en el barrio</h3>
             <p>
               Cercanía, rapidez y confianza para acompañarte en tus necesidades
@@ -187,7 +257,7 @@
           </article>
 
           <article class="service-card">
-            <div class="icon">📱</div>
+            <div class="service-icon">📱</div>
             <h3>Contacto directo</h3>
             <p>
               Comunicación simple por teléfono, WhatsApp e Instagram para una
@@ -198,33 +268,36 @@
       </div>
     </section>
 
-    <section class="section stats">
+    <section class="section stats-section">
       <div class="container stats-grid">
-        <div class="stat-box">
-          <h3>4,3 / 5</h3>
+        <article class="stat-card">
+          <h3>4,9 / 5</h3>
           <p>Calificación general</p>
-        </div>
-        <div class="stat-box">
+        </article>
+
+        <article class="stat-card">
           <h3>36</h3>
           <p>Opiniones de clientes</p>
-        </div>
-        <div class="stat-box">
+        </article>
+
+        <article class="stat-card">
           <h3>Abierto</h3>
           <p>Hasta las 19:30 h</p>
-        </div>
-        <div class="stat-box">
+        </article>
+
+        <article class="stat-card">
           <h3>CABA</h3>
           <p>Ciudad Autónoma de Buenos Aires</p>
-        </div>
+        </article>
       </div>
     </section>
 
-    <section class="section testimonials" id="opiniones">
+    <section class="section" id="opiniones">
       <div class="container">
-        <p class="section-kicker center">Opiniones</p>
+        <p class="section-tag center">Opiniones</p>
         <h2 class="section-title center">Lo que dicen nuestros clientes</h2>
 
-        <div class="cards-grid testimonials-grid">
+        <div class="testimonials-grid">
           <article class="testimonial-card">
             <div class="stars">★★★★★</div>
             <p>“Buena atención, hacen preparados.”</p>
@@ -246,12 +319,12 @@
       </div>
     </section>
 
-    <section class="section contact" id="contacto">
-      <div class="container grid-2 contact-wrap">
-        <div>
-          <p class="section-kicker">Contacto</p>
+    <section class="section contact-section" id="contacto">
+      <div class="container contact-grid">
+        <div class="contact-info">
+          <p class="section-tag">Contacto</p>
           <h2 class="section-title">Estamos para ayudarte</h2>
-          <p class="section-text">
+          <p class="section-description">
             Contactanos para consultas, pedidos, fórmulas magistrales o
             información general sobre nuestros productos y servicios.
           </p>
@@ -267,15 +340,16 @@
 
           <div class="contact-buttons">
             <a
-              class="btn btn-primary"
+              class="btn btn-dark"
               href="https://wa.me/541153324146"
               target="_blank"
               rel="noopener noreferrer"
             >
               Escribir por WhatsApp
             </a>
+
             <a
-              class="btn btn-secondary"
+              class="btn btn-outline"
               href="https://www.google.com/maps/search/?api=1&query=Av.+Cabildo+4299,+Buenos+Aires"
               target="_blank"
               rel="noopener noreferrer"
@@ -287,11 +361,14 @@
 
         <div class="form-box">
           <h3>Envíanos tu consulta</h3>
+
           <form id="contactForm">
             <input type="text" id="nombre" placeholder="Tu nombre" required />
             <input type="tel" id="telefono" placeholder="Tu teléfono" required />
             <textarea id="mensaje" rows="5" placeholder="Escribe tu consulta" required></textarea>
-            <button type="submit" class="btn btn-primary full">Enviar por WhatsApp</button>
+            <button type="submit" class="btn btn-primary full-btn">
+              Enviar por WhatsApp
+            </button>
           </form>
         </div>
       </div>
@@ -304,12 +381,27 @@
         <h3>Farmacia y Laboratorio Oasis</h3>
         <p>Av. Cabildo 4299 · Ciudad Autónoma de Buenos Aires</p>
       </div>
-      <div>
+
+      <div class="footer-right">
         <p>Tel: 011 4702-9272</p>
         <p>WhatsApp: 11 5332-4146</p>
       </div>
     </div>
   </footer>
+
+  <a
+    href="https://wa.me/541153324146"
+    class="whatsapp-float"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Abrir WhatsApp"
+    title="WhatsApp"
+  >
+    <img
+      src="https://cdn-icons-png.flaticon.com/512/733/733585.png"
+      alt="WhatsApp"
+    />
+  </a>
 
   <script src="script.js"></script>
 </body>
