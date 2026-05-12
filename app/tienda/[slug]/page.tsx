@@ -1,7 +1,6 @@
 import { notFound } from "next/navigation";
-import { createClient } from "@/lib/supabase/server";
 import { ProductDetail } from "@/components/product-detail";
-import type { Product } from "@/lib/types";
+import { getActiveProductBySlug } from "@/lib/products";
 
 interface ProductPageProps {
   params: Promise<{ slug: string }>;
@@ -9,13 +8,7 @@ interface ProductPageProps {
 
 export async function generateMetadata({ params }: ProductPageProps) {
   const { slug } = await params;
-  const supabase = await createClient();
-  
-  const { data: product } = await supabase
-    .from("products")
-    .select("name, description")
-    .eq("slug", slug)
-    .single();
+  const product = await getActiveProductBySlug(slug);
 
   if (!product) {
     return {
@@ -31,18 +24,11 @@ export async function generateMetadata({ params }: ProductPageProps) {
 
 export default async function ProductPage({ params }: ProductPageProps) {
   const { slug } = await params;
-  const supabase = await createClient();
-  
-  const { data: product, error } = await supabase
-    .from("products")
-    .select("*")
-    .eq("slug", slug)
-    .eq("is_active", true)
-    .single();
+  const product = await getActiveProductBySlug(slug);
 
-  if (error || !product) {
+  if (!product) {
     notFound();
   }
 
-  return <ProductDetail product={product as Product} />;
+  return <ProductDetail product={product} />;
 }

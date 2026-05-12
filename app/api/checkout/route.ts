@@ -1,16 +1,11 @@
 import { NextResponse } from "next/server"
+import { Preference } from "mercadopago"
 import { createClient } from "@/lib/supabase/server"
-import { MercadoPagoConfig, Preference } from "mercadopago"
-
-const client = new MercadoPagoConfig({
-  accessToken: process.env.MERCADOPAGO_ACCESS_TOKEN!,
-})
+import { getMercadoPagoClient, getPublicBaseUrl } from "@/lib/mercadopago"
 
 interface CheckoutItem {
   productId: string
-  productName: string
   quantity: number
-  unitPrice: number
 }
 
 interface CheckoutRequest {
@@ -33,27 +28,125 @@ interface CheckoutRequest {
     method: string
     cost: number
   }
-  subtotal: number
-  total: number
+}
+
+interface ProductForCheckout {
+  id: string
+  name: string
+  price: number
+  promotional_price: number | null
+  stock: number
+  is_active: boolean
+}
+
+function roundMoney(value: number) {
+  return Math.round(value * 100) / 100
+}
+
+function isValidEmail(email: string) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+}
+
+function validateCheckout(body: CheckoutRequest) {
+  if (!body.items?.length) return "El carrito está vacío"
+  if (!body.customer?.name?.trim()) return "Falta el nombre del cliente"
+  if (!isValidEmail(body.customer.email || "")) return "Email inválido"
+  if (!body.customer?.phone?.trim()) return "Falta el teléfono"
+  if (!body.shippingAddress?.street?.trim()) return "Falta la calle de envío"
+  if (!body.shippingAddress?.number?.trim()) return "Falta la altura de envío"
+  if (!body.shippingAddress?.city?.trim()) return "Falta la ciudad de envío"
+  if (!body.shippingAddress?.province?.trim()) return "Falta la provincia de envío"
+  if (!body.shippingAddress?.postalCode?.trim()) return "Falta el código postal"
+  if (!body.shipping?.method?.trim()) return "Falta seleccionar un envío"
+  if (!Number.isFinite(body.shipping.cost) || body.shipping.cost < 0) {
+    return "Costo de envío inválido"
+  }
+
+  const invalidItem = body.items.find(
+    (item) => !item.productId || !Number.isInteger(item.quantity) || item.quantity <= 0
+  )
+
+  if (invalidItem) return "Hay productos inválidos en el carrito"
+
+  return null
 }
 
 export async function POST(request: Request) {
   try {
-    const body: CheckoutRequest = await request.json()
-    const supabase = await createClient()
+    const body = (await request.json()) as CheckoutRequest
+    const validationError = validateCheckout(body)
 
-    // Create order in database
+    if (validationError) {
+      return NextResponse.json({ error: validationError }, { status: 400 })
+    }
+
+    const supabase = await createClient()
+    const productIds = [...new Set(body.items.map((item) => item.productId))]
+    const { data: products, error: productsError } = await supabase
+      .from("products")
+      .select("id,name,price,promotional_price,stock,is_active")
+      .in("id", productIds)
+
+    if (productsError || !products) {
+      console.error("Error fetching checkout products:", productsError)
+      return NextResponse.json(
+        { error: "Error al validar los productos" },
+        { status: 500 }
+      )
+    }
+
+    const productsById = new Map(
+      (products as ProductForCheckout[]).map((product) => [product.id, product])
+    )
+
+    const preferenceItems = body.items.map((item) => {
+      const product = productsById.get(item.productId)
+
+      if (!product || !product.is_active) {
+        throw new Error("Uno de los productos ya no está disponible")
+      }
+
+      if (product.stock < item.quantity) {
+        throw new Error(`No hay stock suficiente de ${product.name}`)
+      }
+
+      return {
+        id: product.id,
+        title: product.name,
+        quantity: item.quantity,
+        unit_price: roundMoney(product.promotional_price ?? product.price),
+        currency_id: "ARS",
+      }
+    })
+
+    const subtotal = roundMoney(
+      preferenceItems.reduce(
+        (sum, item) => sum + item.unit_price * item.quantity,
+        0
+      )
+    )
+    const shippingCost = roundMoney(body.shipping.cost)
+    const total = roundMoney(subtotal + shippingCost)
+
     const { data: order, error: orderError } = await supabase
       .from("orders")
       .insert({
-        customer_name: body.customer.name,
-        customer_email: body.customer.email,
-        customer_phone: body.customer.phone,
-        shipping_address: body.shippingAddress,
-        shipping_cost: body.shipping.cost,
+        customer_name: body.customer.name.trim(),
+        customer_email: body.customer.email.trim().toLowerCase(),
+        customer_phone: body.customer.phone.trim(),
+        shipping_address: {
+          street: body.shippingAddress.street.trim(),
+          number: body.shippingAddress.number.trim(),
+          floor: body.shippingAddress.floor?.trim() || null,
+          apartment: body.shippingAddress.apartment?.trim() || null,
+          city: body.shippingAddress.city.trim(),
+          province: body.shippingAddress.province.trim(),
+          postal_code: body.shippingAddress.postalCode.trim(),
+        },
+        shipping_cost: shippingCost,
         shipping_method: body.shipping.method,
-        subtotal: body.subtotal,
-        total: body.total,
+        subtotal,
+        total,
         status: "pending",
       })
       .select()
@@ -67,14 +160,13 @@ export async function POST(request: Request) {
       )
     }
 
-    // Create order items
-    const orderItems = body.items.map((item) => ({
+    const orderItems = preferenceItems.map((item) => ({
       order_id: order.id,
-      product_id: item.productId,
-      product_name: item.productName,
+      product_id: item.id,
+      product_name: item.title,
       quantity: item.quantity,
-      unit_price: item.unitPrice,
-      total_price: item.unitPrice * item.quantity,
+      unit_price: item.unit_price,
+      total_price: roundMoney(item.unit_price * item.quantity),
     }))
 
     const { error: itemsError } = await supabase
@@ -83,43 +175,38 @@ export async function POST(request: Request) {
 
     if (itemsError) {
       console.error("Error creating order items:", itemsError)
+      return NextResponse.json(
+        { error: "Error al crear el detalle de la orden" },
+        { status: 500 }
+      )
     }
 
-    // Create Mercado Pago preference
-    const preference = new Preference(client)
-
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
-
+    const preference = new Preference(getMercadoPagoClient())
+    const baseUrl = getPublicBaseUrl()
+    const notificationUrl = `${baseUrl}/api/webhook/mercadopago`
     const preferenceData = await preference.create({
       body: {
         items: [
-          ...body.items.map((item) => ({
-            id: item.productId,
-            title: item.productName,
-            quantity: item.quantity,
-            unit_price: item.unitPrice,
-            currency_id: "ARS",
-          })),
-          // Add shipping as a separate item
+          ...preferenceItems,
           {
             id: "shipping",
             title: `Envío - ${body.shipping.method}`,
             quantity: 1,
-            unit_price: body.shipping.cost,
+            unit_price: shippingCost,
             currency_id: "ARS",
           },
         ],
         payer: {
-          name: body.customer.name.split(" ")[0],
-          surname: body.customer.name.split(" ").slice(1).join(" ") || "",
-          email: body.customer.email,
+          name: body.customer.name.trim().split(" ")[0],
+          surname: body.customer.name.trim().split(" ").slice(1).join(" ") || "-",
+          email: body.customer.email.trim().toLowerCase(),
           phone: {
-            number: body.customer.phone,
+            number: body.customer.phone.trim(),
           },
           address: {
-            street_name: body.shippingAddress.street,
-            street_number: parseInt(body.shippingAddress.number) || 0,
-            zip_code: body.shippingAddress.postalCode,
+            street_name: body.shippingAddress.street.trim(),
+            street_number: body.shippingAddress.number.trim(),
+            zip_code: body.shippingAddress.postalCode.trim(),
           },
         },
         back_urls: {
@@ -129,12 +216,17 @@ export async function POST(request: Request) {
         },
         auto_return: "approved",
         external_reference: order.id,
-        notification_url: `${baseUrl}/api/webhook/mercadopago`,
+        notification_url: notificationUrl,
         statement_descriptor: "FARMACIA OASIS",
+        metadata: {
+          order_id: order.id,
+          subtotal,
+          shipping_cost: shippingCost,
+          total,
+        },
       },
     })
 
-    // Update order with Mercado Pago preference ID
     await supabase
       .from("orders")
       .update({ mercadopago_preference_id: preferenceData.id })
@@ -142,14 +234,13 @@ export async function POST(request: Request) {
 
     return NextResponse.json({
       preferenceId: preferenceData.id,
-      initPoint: preferenceData.init_point,
+      initPoint: preferenceData.init_point || preferenceData.sandbox_init_point,
       orderId: order.id,
     })
   } catch (error) {
     console.error("Checkout error:", error)
-    return NextResponse.json(
-      { error: "Error al procesar el checkout" },
-      { status: 500 }
-    )
+    const message = error instanceof Error ? error.message : "Error al procesar el checkout"
+
+    return NextResponse.json({ error: message }, { status: 500 })
   }
 }

@@ -11,6 +11,7 @@ interface ShippingOption {
   method: string
   cost: number
   estimatedDays: string
+  source?: "correo-argentino" | "fallback"
 }
 
 interface ShippingCalculatorProps {
@@ -37,6 +38,15 @@ export function ShippingCalculator({
     return sum + weight * item.quantity
   }, 0)
 
+  const packageDimensions = items.reduce(
+    (dimensions, item) => ({
+      height: Math.max(dimensions.height, item.product.height_cm || 10),
+      width: Math.max(dimensions.width, item.product.width_cm || 20),
+      length: Math.max(dimensions.length, item.product.depth_cm || 30),
+    }),
+    { height: 10, width: 20, length: 30 }
+  )
+
   const calculateShipping = async () => {
     if (!postalCode || postalCode.length < 4) {
       setError("Ingresa un código postal válido")
@@ -53,6 +63,9 @@ export function ShippingCalculator({
         body: JSON.stringify({
           postalCode,
           weight: totalWeight,
+          height: packageDimensions.height,
+          width: packageDimensions.width,
+          length: packageDimensions.length,
         }),
       })
 
@@ -63,6 +76,7 @@ export function ShippingCalculator({
         setShippingOptions([])
       } else {
         setShippingOptions(data.options)
+        if (data.warning) setError(data.warning)
         setLastPostalCode(postalCode)
         // Auto-select first option if none selected
         if (!selectedShipping && data.options.length > 0) {
@@ -155,6 +169,11 @@ export function ShippingCalculator({
                         <Clock className="h-3 w-3" />
                         {option.estimatedDays}
                       </p>
+                      {option.source === "fallback" && (
+                        <p className="mt-1 text-xs text-amber-600">
+                          Precio estimado sujeto a confirmación
+                        </p>
+                      )}
                     </div>
                   </div>
                   <p className="font-semibold text-primary">
