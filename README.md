@@ -26,3 +26,4 @@ Los 16 productos enviados están listos para cargar en Supabase con `supabase/se
 3. Actualizar `price`, `promotional_price` y `stock` en Supabase cuando estén definidos los precios finales.
 
 Mientras un producto tenga `price = 0` o `stock = 0`, la tienda muestra “Consultar precio” y redirige a WhatsApp en vez de agregarlo al carrito.
+
