@@ -27,8 +27,3 @@ Los 16 productos enviados están listos para cargar en Supabase con `supabase/se
 
 Mientras un producto tenga `price = 0` o `stock = 0`, la tienda muestra “Consultar precio” y redirige a WhatsApp en vez de agregarlo al carrito.
 
-## Modo fallback para Vercel
-
-La tienda puede abrir aunque Vercel todavía no tenga configuradas las variables de Supabase. En ese caso usa un catálogo local de respaldo (`lib/fallback-products.ts`) con los 16 productos y los muestra como “Consultar precio”.
-
-Para que Vercel muestre la versión corregida, el último commit debe estar en el branch conectado al proyecto y luego se debe ejecutar un deploy nuevo desde Vercel.
