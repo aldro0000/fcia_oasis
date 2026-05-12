@@ -36,7 +36,7 @@ insert into products (
   'OASIS-KIT-LIMPIEZA-01',
   null,
   true,
-  '/products/01-kit-limpieza-facial-completa.png',
+  '/products/01-kit-limpieza-facial-completa.webp',
   array['Limpieza facial', 'Kits'],
   array['leche de limpieza', 'tónico facial', 'exfoliante', 'rutina facial']
 ),
@@ -54,7 +54,7 @@ insert into products (
   'OASIS-BALSAMO-LABIAL-15G',
   null,
   true,
-  '/products/02-balsamo-reparador-labial-vitamina-k-e-15g.png',
+  '/products/02-balsamo-reparador-labial-vitamina-k-e-15g.webp',
   array['Labios', 'Reparadores'],
   array['bálsamo labial', 'vitamina k', 'vitamina e', 'reparador']
 ),
@@ -72,7 +72,7 @@ insert into products (
   'OASIS-EMULSION-FPS30',
   null,
   true,
-  '/products/03-emulsion-hidratante-fitoesteroles-fps-30.png',
+  '/products/03-emulsion-hidratante-fitoesteroles-fps-30.webp',
   array['Hidratación', 'Protección solar'],
   array['emulsión hidratante', 'fitoesteroles', 'fps 30', 'día']
 ),
@@ -90,7 +90,7 @@ insert into products (
   'OASIS-KIT-ANTIAGE-04',
   null,
   true,
-  '/products/04-kit-antiage-completo-dia-noche.png',
+  '/products/04-kit-antiage-completo-dia-noche.webp',
   array['Antiage', 'Kits'],
   array['antiage', 'rutina día', 'rutina noche', 'contorno de ojos']
 ),
@@ -108,7 +108,7 @@ insert into products (
   'OASIS-NIGHT-REPAIR-50G',
   null,
   true,
-  '/products/05-crema-antiage-noche-oasis-night-repair-50g.png',
+  '/products/05-crema-antiage-noche-oasis-night-repair-50g.webp',
   array['Antiage', 'Cremas faciales'],
   array['crema noche', 'night repair', 'antiage', '50g']
 ),
@@ -126,7 +126,7 @@ insert into products (
   'OASIS-DAY-BALANCE-50G',
   null,
   true,
-  '/products/06-crema-antiage-dia-oasis-day-balance-50g.png',
+  '/products/06-crema-antiage-dia-oasis-day-balance-50g.webp',
   array['Antiage', 'Cremas faciales'],
   array['crema día', 'day balance', 'antiage', '50g']
 ),
@@ -144,7 +144,7 @@ insert into products (
   'OASIS-CONTORNO-OJOS-CAFEINA',
   null,
   true,
-  '/products/07-gel-contorno-ojos-cafeina-efecto-seda.png',
+  '/products/07-gel-contorno-ojos-cafeina-efecto-seda.webp',
   array['Contorno de ojos', 'Antiage'],
   array['cafeína', 'efecto seda', 'ojeras', 'mirada']
 ),
@@ -162,7 +162,7 @@ insert into products (
   'OASIS-ESPUMA-TE-VERDE-MALVA',
   null,
   true,
-  '/products/08-espuma-limpieza-facial-te-verde-malva.png',
+  '/products/08-espuma-limpieza-facial-te-verde-malva.webp',
   array['Limpieza facial'],
   array['espuma facial', 'té verde', 'malva', 'descongestiva']
 ),
@@ -180,7 +180,7 @@ insert into products (
   'OASIS-EXFOLIANTE-SUAVIDAD',
   null,
   true,
-  '/products/09-exfoliante-facial-suavidad-natural.png',
+  '/products/09-exfoliante-facial-suavidad-natural.webp',
   array['Limpieza facial', 'Exfoliantes'],
   array['exfoliante facial', 'suavidad natural', 'renovación']
 ),
@@ -198,7 +198,7 @@ insert into products (
   'OASIS-AGUA-MICELAR',
   null,
   true,
-  '/products/10-agua-micelar-facial.png',
+  '/products/10-agua-micelar-facial.webp',
   array['Limpieza facial'],
   array['agua micelar', 'limpieza', 'desmaquillante']
 ),
@@ -216,7 +216,7 @@ insert into products (
   'OASIS-CUELLO-ESCOTE-40',
   null,
   true,
-  '/products/11-crema-cuello-escote-40.png',
+  '/products/11-crema-cuello-escote-40.webp',
   array['Antiage', 'Cremas corporales'],
   array['cuello', 'escote', '+40', 'volumen']
 ),
@@ -234,7 +234,7 @@ insert into products (
   'OASIS-GEL-FLEBOTONICO-250G',
   null,
   true,
-  '/products/12-gel-flebotonico-250g.png',
+  '/products/12-gel-flebotonico-250g.webp',
   array['Cuidado corporal', 'Piernas'],
   array['gel flebotónico', 'piernas cansadas', 'circulación', '250g']
 ),
@@ -252,7 +252,7 @@ insert into products (
   'OASIS-AGUA-TERMAL',
   null,
   true,
-  '/products/13-agua-termal-facial.png',
+  '/products/13-agua-termal-facial.webp',
   array['Hidratación', 'Facial'],
   array['agua termal', 'spray facial', 'aqua vital']
 ),
@@ -270,7 +270,7 @@ insert into products (
   'OASIS-SERUM-TENSOR-ARGIRELINE-10',
   null,
   true,
-  '/products/14-serum-tensor-botox-argireline-10.png',
+  '/products/14-serum-tensor-botox-argireline-10.webp',
   array['Serums', 'Antiage'],
   array['serum tensor', 'argireline', 'botox sin aguja', 'antiage']
 ),
@@ -288,7 +288,7 @@ insert into products (
   'OASIS-SERUM-PEPITAS-UVA',
   null,
   true,
-  '/products/15-serum-regenerador-pepitas-uva.png',
+  '/products/15-serum-regenerador-pepitas-uva.webp',
   array['Serums', 'Regeneradores'],
   array['serum regenerador', 'pepitas de uva', 'nutrición facial']
 ),
@@ -306,7 +306,7 @@ insert into products (
   'OASIS-SERUM-VITC-HIALURONICO',
   null,
   true,
-  '/products/16-serum-vit-c-acido-hialuronico.png',
+  '/products/16-serum-vit-c-acido-hialuronico.webp',
   array['Serums', 'Hidratación'],
   array['vitamina c', 'ácido hialurónico', 'hidra glow', 'luminosidad']
 )

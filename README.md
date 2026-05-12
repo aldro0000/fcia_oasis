@@ -4,8 +4,21 @@
 
 ### Mercado Pago
 
-- `MERCADOPAGO_ACCESS_TOKEN`: access token privado de Mercado Pago para crear preferencias y consultar pagos.
-- `NEXT_PUBLIC_BASE_URL`: URL pública del sitio, por ejemplo `https://tudominio.com`. Mercado Pago usa esta URL para volver al checkout y enviar webhooks.
+- `MERCADOPAGO_ACCESS_TOKEN`: access token privado de Mercado Pago para crear preferencias y consultar pagos. Cargarlo solo como variable secreta en Vercel/local; no commitearlo.
+- `NEXT_PUBLIC_MERCADOPAGO_PUBLIC_KEY`: public key de Mercado Pago. Para Checkout Pro no es obligatorio, pero queda documentado para futuras integraciones client-side.
+- `NEXT_PUBLIC_BASE_URL`: URL pública del sitio, por ejemplo `https://fcia-oasis.vercel.app`. Mercado Pago usa esta URL para volver al checkout y enviar webhooks.
+
+## Configuración rápida en Vercel
+
+En `Vercel → Project → Settings → Environment Variables` cargar:
+
+```env
+NEXT_PUBLIC_BASE_URL=https://fcia-oasis.vercel.app
+NEXT_PUBLIC_MERCADOPAGO_PUBLIC_KEY=TEST-b21e59d6-6943-4f0f-a29f-d943429fee03
+MERCADOPAGO_ACCESS_TOKEN=tu_access_token_privado
+```
+
+El access token que compartiste es de prueba (`TEST-...`). No lo guardo en el repositorio por seguridad: debe quedar cargado únicamente como variable de entorno en Vercel. Después de guardar variables, ejecutar un redeploy.
 
 ### Correo Argentino MiCorreo
 
@@ -27,3 +40,18 @@ Los 16 productos enviados están listos para cargar en Supabase con `supabase/se
 
 Mientras un producto tenga `price = 0` o `stock = 0`, la tienda muestra “Consultar precio” y redirige a WhatsApp en vez de agregarlo al carrito.
 
+## Modo fallback para Vercel
+
+La tienda puede abrir aunque Vercel todavía no tenga configuradas las variables de Supabase. En ese caso usa un catálogo local de respaldo (`lib/fallback-products.ts`) con los 16 productos y los muestra como “Consultar precio”.
+
+Para que Vercel muestre la versión corregida, el último commit debe estar en el branch conectado al proyecto y luego se debe ejecutar un deploy nuevo desde Vercel.
+
+## Copiar fotos desde Windows
+
+Si las fotos están en `C:\fotos web fcia`, ejecutar en PowerShell desde la raíz del proyecto:
+
+```powershell
+.\scripts\copy-product-images.ps1
+```
+
+El script copia y renombra las imágenes `.webp` a `public/products/` con los nombres que usa la tienda. Luego subir esos archivos a GitHub y redeployar en Vercel.

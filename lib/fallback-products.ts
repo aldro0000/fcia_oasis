@@ -17,6 +17,7 @@ export const fallbackProducts: Product[] = [
   {
     ...productBase,
     id: "fallback-01",
+    image_url: "/products/01-kit-limpieza-facial-completa.webp",
     slug: "kit-limpieza-facial-completa-leche-tonico-exfoliante",
     name: "Kit Limpieza Facial Completa – Leche + Tónico + Exfoliante",
     description:
@@ -32,6 +33,7 @@ export const fallbackProducts: Product[] = [
   {
     ...productBase,
     id: "fallback-02",
+    image_url: "/products/02-balsamo-reparador-labial-vitamina-k-e-15g.webp",
     slug: "balsamo-reparador-labial-vitamina-k-vitamina-e-15g",
     name: "Bálsamo Reparador Labial con Vitamina K y Vitamina E – 15 g",
     description:
@@ -47,6 +49,7 @@ export const fallbackProducts: Product[] = [
   {
     ...productBase,
     id: "fallback-03",
+    image_url: "/products/03-emulsion-hidratante-fitoesteroles-fps-30.webp",
     slug: "emulsion-hidratante-fitoesteroles-fps-30",
     name: "Emulsión Hidratante con Fitoesteroles FPS 30",
     description:
@@ -62,6 +65,7 @@ export const fallbackProducts: Product[] = [
   {
     ...productBase,
     id: "fallback-04",
+    image_url: "/products/04-kit-antiage-completo-dia-noche.webp",
     slug: "kit-antiage-completo-rutina-dia-noche",
     name: "Kit Antiage Completo – Rutina Día & Noche",
     description:
@@ -77,6 +81,7 @@ export const fallbackProducts: Product[] = [
   {
     ...productBase,
     id: "fallback-05",
+    image_url: "/products/05-crema-antiage-noche-oasis-night-repair-50g.webp",
     slug: "crema-antiage-noche-oasis-night-repair-50g",
     name: "Crema Antiage Noche – Oasis Night Repair (50 g)",
     description:
@@ -92,6 +97,7 @@ export const fallbackProducts: Product[] = [
   {
     ...productBase,
     id: "fallback-06",
+    image_url: "/products/06-crema-antiage-dia-oasis-day-balance-50g.webp",
     slug: "crema-antiage-dia-oasis-day-balance-50g",
     name: "Crema Antiage Día – Oasis Day Balance (50 g)",
     description:
@@ -107,6 +113,7 @@ export const fallbackProducts: Product[] = [
   {
     ...productBase,
     id: "fallback-07",
+    image_url: "/products/07-gel-contorno-ojos-cafeina-efecto-seda.webp",
     slug: "gel-contorno-ojos-cafeina-efecto-seda",
     name: "Gel Contorno de Ojos con Cafeína – Efecto Seda",
     description:
@@ -122,6 +129,7 @@ export const fallbackProducts: Product[] = [
   {
     ...productBase,
     id: "fallback-08",
+    image_url: "/products/08-espuma-limpieza-facial-te-verde-malva.webp",
     slug: "espuma-limpieza-facial-descongestiva-te-verde-malva",
     name: "Espuma de Limpieza Facial Descongestiva – Té Verde & Malva",
     description:
@@ -137,6 +145,7 @@ export const fallbackProducts: Product[] = [
   {
     ...productBase,
     id: "fallback-09",
+    image_url: "/products/09-exfoliante-facial-suavidad-natural.webp",
     slug: "exfoliante-facial-suavidad-natural",
     name: "Exfoliante Facial Suavidad Natural",
     description:
@@ -152,6 +161,7 @@ export const fallbackProducts: Product[] = [
   {
     ...productBase,
     id: "fallback-10",
+    image_url: "/products/10-agua-micelar-facial.webp",
     slug: "agua-micelar-facial",
     name: "Agua Micelar Facial",
     description: "Agua micelar facial para limpieza diaria y retiro de impurezas.",
@@ -166,6 +176,7 @@ export const fallbackProducts: Product[] = [
   {
     ...productBase,
     id: "fallback-11",
+    image_url: "/products/11-crema-cuello-escote-40.webp",
     slug: "crema-cuello-escote-40",
     name: "Crema de Cuello y Escote +40",
     description: "Crema específica para cuello y escote +40 con hidratación y efecto confortable.",
@@ -180,6 +191,7 @@ export const fallbackProducts: Product[] = [
   {
     ...productBase,
     id: "fallback-12",
+    image_url: "/products/12-gel-flebotonico-250g.webp",
     slug: "gel-flebotonico-250g-circulacion-piernas-cansadas",
     name: "Gel Flebotónico 250 g – Circulación y piernas cansadas",
     description: "Gel flebotónico refrescante para masajes de alivio en piernas cansadas.",
@@ -194,6 +206,7 @@ export const fallbackProducts: Product[] = [
   {
     ...productBase,
     id: "fallback-13",
+    image_url: "/products/13-agua-termal-facial.webp",
     slug: "agua-termal-facial",
     name: "Agua Termal Facial",
     description: "Agua termal facial en spray para refrescar y acompañar la hidratación diaria.",
@@ -208,6 +221,7 @@ export const fallbackProducts: Product[] = [
   {
     ...productBase,
     id: "fallback-14",
+    image_url: "/products/14-serum-tensor-botox-argireline-10.webp",
     slug: "serum-tensor-botox-argireline-10",
     name: "Serum tensor botox con argireline 10%",
     description: "Serum tensor tipo botox sin aguja con argireline 10%.",
@@ -222,6 +236,7 @@ export const fallbackProducts: Product[] = [
   {
     ...productBase,
     id: "fallback-15",
+    image_url: "/products/15-serum-regenerador-pepitas-uva.webp",
     slug: "serum-regenerador-pepitas-uva",
     name: "Serum regenerador pepitas de uva",
     description: "Serum regenerador con pepitas de uva para nutrir y mejorar la apariencia de la piel.",
@@ -236,6 +251,7 @@ export const fallbackProducts: Product[] = [
   {
     ...productBase,
     id: "fallback-16",
+    image_url: "/products/16-serum-vit-c-acido-hialuronico.webp",
     slug: "serum-vit-c-acido-hialuronico",
     name: "Serum Vit C + Ácido Hialurónico",
     description: "Serum facial con vitamina C y ácido hialurónico para luminosidad e hidratación.",
