@@ -20,7 +20,7 @@ interface ShippingOption {
 }
 
 export function CheckoutForm() {
-  const { items, getTotalPrice, clearCart } = useCartStore()
+  const { items, getSubtotal, clearCart } = useCartStore()
   const [isLoading, setIsLoading] = useState(false)
   const [mounted, setMounted] = useState(false)
   const [selectedShipping, setSelectedShipping] = useState<ShippingOption | null>(null)
@@ -66,7 +66,7 @@ export function CheckoutForm() {
     )
   }
 
-  const subtotal = getTotalPrice()
+  const subtotal = getSubtotal()
   const shippingCost = selectedShipping?.cost ?? 0
   const total = subtotal + shippingCost
 
@@ -92,9 +92,7 @@ export function CheckoutForm() {
         body: JSON.stringify({
           items: items.map((item) => ({
             productId: item.product.id,
-            productName: item.product.name,
             quantity: item.quantity,
-            unitPrice: item.product.promotional_price || item.product.price,
           })),
           customer: {
             name: formData.name,
@@ -114,8 +112,6 @@ export function CheckoutForm() {
             method: selectedShipping.method,
             cost: selectedShipping.cost,
           },
-          subtotal,
-          total,
         }),
       })
 
