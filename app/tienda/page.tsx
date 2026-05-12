@@ -1,7 +1,6 @@
-import { createClient } from "@/lib/supabase/server";
 import { ProductCard } from "@/components/product-card";
 import { ShoppingBag } from "lucide-react";
-import type { Product } from "@/lib/types";
+import { getActiveProducts } from "@/lib/products";
 
 export const metadata = {
   title: "Tienda | Farmacia Oasis",
@@ -9,19 +8,7 @@ export const metadata = {
 };
 
 export default async function TiendaPage() {
-  const supabase = await createClient();
-  
-  const { data: products, error } = await supabase
-    .from("products")
-    .select("*")
-    .eq("is_active", true)
-    .order("name");
-
-  if (error) {
-    console.error("[v0] Error fetching products:", error);
-  }
-
-  const productsList = (products as Product[]) || [];
+  const productsList = await getActiveProducts();
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-12 lg:px-8">

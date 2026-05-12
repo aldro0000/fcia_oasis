@@ -1,21 +1,9 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Montserrat } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { CartProvider } from "@/components/cart-provider";
 import { Toaster } from "@/components/ui/toaster";
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-});
-
-const montserrat = Montserrat({
-  subsets: ["latin"],
-  variable: "--font-montserrat",
-  weight: ["500", "600", "700", "800"],
-});
 
 export const metadata: Metadata = {
   title: "Farmacia y Laboratorio Oasis | Buenos Aires",
@@ -44,7 +32,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="es" className={`${inter.variable} ${montserrat.variable} bg-background`}>
+    <html lang="es" className="bg-background">
       <body className="min-h-screen flex flex-col antialiased">
         <CartProvider>
           <Header />
