@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server"
 import type { Product } from "@/lib/types"
+import { getProductImagePath } from "@/lib/assets/product-image-paths"
 import { fallbackProducts } from "@/lib/fallback-products"
 
 function hasSupabaseConfig() {
@@ -9,13 +10,24 @@ function hasSupabaseConfig() {
   )
 }
 
+function withForcedImage(product: Product): Product {
+  return {
+    ...product,
+    image_url: getProductImagePath(product.slug),
+  }
+}
+
+function withForcedImages(products: Product[]) {
+  return products.map(withForcedImage)
+}
+
 function sortProducts(products: Product[]) {
   return [...products].sort((a, b) => a.name.localeCompare(b.name, "es"))
 }
 
 export async function getActiveProducts() {
   if (!hasSupabaseConfig()) {
-    return sortProducts(fallbackProducts)
+    return sortProducts(withForcedImages(fallbackProducts))
   }
 
   try {
@@ -28,13 +40,13 @@ export async function getActiveProducts() {
 
     if (error || !products?.length) {
       if (error) console.error("Error fetching products from Supabase:", error)
-      return sortProducts(fallbackProducts)
+      return sortProducts(withForcedImages(fallbackProducts))
     }
 
-    return products as Product[]
+    return withForcedImages(products as Product[])
   } catch (error) {
     console.error("Supabase products fallback:", error)
-    return sortProducts(fallbackProducts)
+    return sortProducts(withForcedImages(fallbackProducts))
   }
 }
 
@@ -49,11 +61,12 @@ export async function getActiveProductBySlug(slug: string) {
         .eq("is_active", true)
         .single()
 
-      if (!error && product) return product as Product
+      if (!error && product) return withForcedImage(product as Product)
     } catch (error) {
       console.error("Supabase product fallback:", error)
     }
   }
 
-  return fallbackProducts.find((product) => product.slug === slug) ?? null
+  const fallbackProduct = fallbackProducts.find((product) => product.slug === slug)
+  return fallbackProduct ? withForcedImage(fallbackProduct) : null
 }

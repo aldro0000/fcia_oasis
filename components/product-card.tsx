@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useCartStore } from "@/lib/cart-store";
+import { getProductImagePath } from "@/lib/assets/product-image-paths";
 import { toast } from "@/components/ui/toaster";
 import { formatPrice } from "@/lib/utils";
 import type { Product } from "@/lib/types";
@@ -23,6 +24,7 @@ export function ProductCard({ product }: ProductCardProps) {
     ? Math.round(((product.price - product.promotional_price!) / product.price) * 100)
     : 0;
   const canBuyOnline = currentPrice > 0 && product.stock > 0;
+  const imageUrl = product.image_url || getProductImagePath(product.slug);
 
   const handleAddToCart = () => {
     if (!canBuyOnline) return;
@@ -38,9 +40,9 @@ export function ProductCard({ product }: ProductCardProps) {
   return (
     <Card className="group flex flex-col overflow-hidden transition-all hover:-translate-y-1 hover:shadow-lg">
       <Link href={`/tienda/${product.slug}`} className="relative aspect-square overflow-hidden bg-muted">
-        {product.image_url ? (
+        {imageUrl ? (
           <Image
-            src={product.image_url}
+            src={imageUrl}
             alt={product.name}
             fill
             className="object-cover transition-transform group-hover:scale-105"

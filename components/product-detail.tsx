@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { useCartStore } from "@/lib/cart-store";
+import { getProductImagePath } from "@/lib/assets/product-image-paths";
 import { toast } from "@/components/ui/toaster";
 import { formatPrice } from "@/lib/utils";
 import type { Product } from "@/lib/types";
@@ -27,6 +28,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
     ? Math.round(((product.price - product.promotional_price!) / product.price) * 100)
     : 0;
   const canBuyOnline = currentPrice > 0 && product.stock > 0;
+  const imageUrl = product.image_url || getProductImagePath(product.slug);
 
   const handleAddToCart = () => {
     if (!canBuyOnline) return;
@@ -53,9 +55,9 @@ export function ProductDetail({ product }: ProductDetailProps) {
       <div className="grid gap-10 lg:grid-cols-2">
         {/* Product Image */}
         <div className="relative aspect-square overflow-hidden rounded-3xl bg-muted">
-          {product.image_url ? (
+          {imageUrl ? (
             <Image
-              src={product.image_url}
+              src={imageUrl}
               alt={product.name}
               fill
               className="object-cover"

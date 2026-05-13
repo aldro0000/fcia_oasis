@@ -1,4 +1,4 @@
-import { getProductImagePath } from "@/lib/assets/product-images"
+import { getProductImagePath } from "@/lib/assets/product-image-paths"
 import type { Product } from "@/lib/types"
 
 const now = "2026-01-01T00:00:00.000Z"
