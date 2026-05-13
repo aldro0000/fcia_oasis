@@ -6,7 +6,7 @@ const now = "2026-01-01T00:00:00.000Z"
 const productBase = {
   price: 0,
   promotional_price: null,
-  stock: 0,
+  stock: 25,
   barcode: null,
   is_active: true,
   image_url: null,
@@ -18,6 +18,9 @@ export const fallbackProducts: Product[] = [
   {
     ...productBase,
     id: "fallback-01",
+    price: 38500,
+    promotional_price: 34900,
+    stock: 25,
     image_url: getProductImagePath("kit-limpieza-facial-completa-leche-tonico-exfoliante"),
     slug: "kit-limpieza-facial-completa-leche-tonico-exfoliante",
     name: "Kit Limpieza Facial Completa – Leche + Tónico + Exfoliante",
@@ -34,6 +37,9 @@ export const fallbackProducts: Product[] = [
   {
     ...productBase,
     id: "fallback-02",
+    price: 9800,
+    promotional_price: null,
+    stock: 25,
     image_url: getProductImagePath("balsamo-reparador-labial-vitamina-k-vitamina-e-15g"),
     slug: "balsamo-reparador-labial-vitamina-k-vitamina-e-15g",
     name: "Bálsamo Reparador Labial con Vitamina K y Vitamina E – 15 g",
@@ -50,6 +56,9 @@ export const fallbackProducts: Product[] = [
   {
     ...productBase,
     id: "fallback-03",
+    price: 16900,
+    promotional_price: null,
+    stock: 25,
     image_url: getProductImagePath("emulsion-hidratante-fitoesteroles-fps-30"),
     slug: "emulsion-hidratante-fitoesteroles-fps-30",
     name: "Emulsión Hidratante con Fitoesteroles FPS 30",
@@ -66,6 +75,9 @@ export const fallbackProducts: Product[] = [
   {
     ...productBase,
     id: "fallback-04",
+    price: 45900,
+    promotional_price: 41900,
+    stock: 25,
     image_url: getProductImagePath("kit-antiage-completo-rutina-dia-noche"),
     slug: "kit-antiage-completo-rutina-dia-noche",
     name: "Kit Antiage Completo – Rutina Día & Noche",
@@ -82,6 +94,9 @@ export const fallbackProducts: Product[] = [
   {
     ...productBase,
     id: "fallback-05",
+    price: 18900,
+    promotional_price: null,
+    stock: 25,
     image_url: getProductImagePath("crema-antiage-noche-oasis-night-repair-50g"),
     slug: "crema-antiage-noche-oasis-night-repair-50g",
     name: "Crema Antiage Noche – Oasis Night Repair (50 g)",
@@ -98,6 +113,9 @@ export const fallbackProducts: Product[] = [
   {
     ...productBase,
     id: "fallback-06",
+    price: 18900,
+    promotional_price: null,
+    stock: 25,
     image_url: getProductImagePath("crema-antiage-dia-oasis-day-balance-50g"),
     slug: "crema-antiage-dia-oasis-day-balance-50g",
     name: "Crema Antiage Día – Oasis Day Balance (50 g)",
@@ -114,6 +132,9 @@ export const fallbackProducts: Product[] = [
   {
     ...productBase,
     id: "fallback-07",
+    price: 15400,
+    promotional_price: null,
+    stock: 25,
     image_url: getProductImagePath("gel-contorno-ojos-cafeina-efecto-seda"),
     slug: "gel-contorno-ojos-cafeina-efecto-seda",
     name: "Gel Contorno de Ojos con Cafeína – Efecto Seda",
@@ -130,6 +151,9 @@ export const fallbackProducts: Product[] = [
   {
     ...productBase,
     id: "fallback-08",
+    price: 14200,
+    promotional_price: null,
+    stock: 25,
     image_url: getProductImagePath("espuma-limpieza-facial-descongestiva-te-verde-malva"),
     slug: "espuma-limpieza-facial-descongestiva-te-verde-malva",
     name: "Espuma de Limpieza Facial Descongestiva – Té Verde & Malva",
@@ -146,6 +170,9 @@ export const fallbackProducts: Product[] = [
   {
     ...productBase,
     id: "fallback-09",
+    price: 11800,
+    promotional_price: null,
+    stock: 25,
     image_url: getProductImagePath("exfoliante-facial-suavidad-natural"),
     slug: "exfoliante-facial-suavidad-natural",
     name: "Exfoliante Facial Suavidad Natural",
@@ -162,6 +189,9 @@ export const fallbackProducts: Product[] = [
   {
     ...productBase,
     id: "fallback-10",
+    price: 9900,
+    promotional_price: null,
+    stock: 25,
     image_url: getProductImagePath("agua-micelar-facial"),
     slug: "agua-micelar-facial",
     name: "Agua Micelar Facial",
@@ -177,6 +207,9 @@ export const fallbackProducts: Product[] = [
   {
     ...productBase,
     id: "fallback-11",
+    price: 17600,
+    promotional_price: null,
+    stock: 25,
     image_url: getProductImagePath("crema-cuello-escote-40"),
     slug: "crema-cuello-escote-40",
     name: "Crema de Cuello y Escote +40",
@@ -192,6 +225,9 @@ export const fallbackProducts: Product[] = [
   {
     ...productBase,
     id: "fallback-12",
+    price: 13200,
+    promotional_price: null,
+    stock: 25,
     image_url: getProductImagePath("gel-flebotonico-250g-circulacion-piernas-cansadas"),
     slug: "gel-flebotonico-250g-circulacion-piernas-cansadas",
     name: "Gel Flebotónico 250 g – Circulación y piernas cansadas",
@@ -207,6 +243,9 @@ export const fallbackProducts: Product[] = [
   {
     ...productBase,
     id: "fallback-13",
+    price: 8900,
+    promotional_price: null,
+    stock: 25,
     image_url: getProductImagePath("agua-termal-facial"),
     slug: "agua-termal-facial",
     name: "Agua Termal Facial",
@@ -222,6 +261,9 @@ export const fallbackProducts: Product[] = [
   {
     ...productBase,
     id: "fallback-14",
+    price: 21400,
+    promotional_price: null,
+    stock: 25,
     image_url: getProductImagePath("serum-tensor-botox-argireline-10"),
     slug: "serum-tensor-botox-argireline-10",
     name: "Serum tensor botox con argireline 10%",
@@ -237,6 +279,9 @@ export const fallbackProducts: Product[] = [
   {
     ...productBase,
     id: "fallback-15",
+    price: 19800,
+    promotional_price: null,
+    stock: 25,
     image_url: getProductImagePath("serum-regenerador-pepitas-uva"),
     slug: "serum-regenerador-pepitas-uva",
     name: "Serum regenerador pepitas de uva",
@@ -252,6 +297,9 @@ export const fallbackProducts: Product[] = [
   {
     ...productBase,
     id: "fallback-16",
+    price: 22600,
+    promotional_price: null,
+    stock: 25,
     image_url: getProductImagePath("serum-vit-c-acido-hialuronico"),
     slug: "serum-vit-c-acido-hialuronico",
     name: "Serum Vit C + Ácido Hialurónico",

@@ -2,6 +2,7 @@ import { NextResponse } from "next/server"
 import { Payment } from "mercadopago"
 import { createClient } from "@/lib/supabase/server"
 import { getMercadoPagoClient } from "@/lib/mercadopago"
+import { sendPaymentApprovedEmails } from "@/lib/email"
 
 type MercadoPagoOrderStatus =
   | "pending"
@@ -48,10 +49,11 @@ export async function POST(request: Request) {
     }
 
     const supabase = await createClient()
+    const nextStatus = mapPaymentStatus(paymentData.status)
     const { error } = await supabase
       .from("orders")
       .update({
-        status: mapPaymentStatus(paymentData.status),
+        status: nextStatus,
         mercadopago_payment_id: String(paymentId),
         updated_at: new Date().toISOString(),
       })
@@ -60,6 +62,28 @@ export async function POST(request: Request) {
     if (error) {
       console.error("Error updating order from Mercado Pago webhook:", error)
       return NextResponse.json({ error: "Order update error" }, { status: 500 })
+    }
+
+    if (nextStatus === "approved") {
+      const [{ data: order }, { data: orderItems }] = await Promise.all([
+        supabase.from("orders").select("*").eq("id", orderId).single(),
+        supabase.from("order_items").select("product_name,quantity,unit_price,total_price").eq("order_id", orderId),
+      ])
+
+      if (order) {
+        await sendPaymentApprovedEmails({
+          orderId,
+          customerName: order.customer_name,
+          customerEmail: order.customer_email,
+          customerPhone: order.customer_phone,
+          shippingAddress: order.shipping_address || {},
+          shippingMethod: order.shipping_method,
+          shippingCost: order.shipping_cost,
+          subtotal: order.subtotal,
+          total: order.total,
+          items: orderItems || [],
+        }).catch((error) => console.error("Approved payment email notification error:", error))
+      }
     }
 
     return NextResponse.json({ received: true })
