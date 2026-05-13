@@ -1,6 +1,14 @@
 # Imágenes de productos Oasis
 
-Guardar las 16 fotos de productos con estos nombres para que coincidan con el seed de Supabase:
+La tienda ahora usa rutas seguras `/api/assets/product/[slug]`. Esa API busca las fotos en estas ubicaciones:
+
+- `public/products/`
+- `public/FOTOS WEB FCIA/`
+- `public/fotos web fcia/`
+- `FOTOS WEB FCIA/`
+- `fotos web fcia/`
+
+Nombres canónicos esperados si copiás las fotos a `public/products/`:
 
 01. `01-kit-limpieza-facial-completa.webp`
 02. `02-balsamo-reparador-labial-vitamina-k-e-15g.webp`
@@ -19,4 +27,4 @@ Guardar las 16 fotos de productos con estos nombres para que coincidan con el se
 15. `15-serum-regenerador-pepitas-uva.webp`
 16. `16-serum-vit-c-acido-hialuronico.webp`
 
-Las rutas públicas quedan como `/products/nombre-del-archivo.webp`.
+Si falta una foto, la API devuelve un placeholder visible para evitar imágenes rotas.

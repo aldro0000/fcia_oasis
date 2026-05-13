@@ -60,6 +60,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
               fill
               className="object-cover"
               priority
+              unoptimized
             />
           ) : (
             <div className="flex size-full items-center justify-center bg-accent">

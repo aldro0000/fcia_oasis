@@ -12,11 +12,12 @@ export function Footer() {
             <div className="flex items-center gap-3">
               <div className="relative size-12 overflow-hidden rounded-full bg-background ring-1 ring-background/20">
                 <Image
-                  src="/logo-farmacia.webp"
+                  src="/api/assets/logo"
                   alt="Farmacia Oasis"
                   fill
                   className="object-contain p-1"
                   sizes="48px"
+                  unoptimized
                 />
               </div>
               <div>
