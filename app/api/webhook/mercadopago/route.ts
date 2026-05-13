@@ -1,43 +1,65 @@
 import { NextResponse } from "next/server"
+import { Payment } from "mercadopago"
 import { createClient } from "@/lib/supabase/server"
-import { MercadoPagoConfig, Payment } from "mercadopago"
+import { getMercadoPagoClient } from "@/lib/mercadopago"
 
-const client = new MercadoPagoConfig({
-  accessToken: process.env.MERCADOPAGO_ACCESS_TOKEN!,
-})
+type MercadoPagoOrderStatus =
+  | "pending"
+  | "approved"
+  | "in_process"
+  | "rejected"
+  | "cancelled"
+
+function mapPaymentStatus(status?: string): MercadoPagoOrderStatus {
+  if (status === "approved") return "approved"
+  if (status === "rejected") return "rejected"
+  if (status === "cancelled") return "cancelled"
+  if (status === "in_process" || status === "in_mediation") return "in_process"
+  return "pending"
+}
+
+async function getNotificationPayload(request: Request) {
+  const url = new URL(request.url)
+  const body = await request.json().catch(() => null)
+  const queryPaymentId = url.searchParams.get("data.id") || url.searchParams.get("id")
+  const bodyPaymentId = body?.data?.id || body?.id
+  const topic = body?.type || body?.topic || url.searchParams.get("type") || url.searchParams.get("topic")
+
+  return {
+    paymentId: bodyPaymentId || queryPaymentId,
+    topic,
+  }
+}
 
 export async function POST(request: Request) {
   try {
-    const body = await request.json()
+    const { paymentId, topic } = await getNotificationPayload(request)
 
-    // Handle payment notification
-    if (body.type === "payment") {
-      const paymentId = body.data.id
-      const payment = new Payment(client)
-      const paymentData = await payment.get({ id: paymentId })
-
-      const supabase = await createClient()
-
-      // Update order status based on payment status
-      let orderStatus = "pending"
-      if (paymentData.status === "approved") {
-        orderStatus = "paid"
-      } else if (paymentData.status === "rejected") {
-        orderStatus = "rejected"
-      } else if (paymentData.status === "cancelled") {
-        orderStatus = "cancelled"
-      }
-
-      await supabase
-        .from("orders")
-        .update({
-          status: orderStatus,
-          mercadopago_payment_id: paymentId.toString(),
-          updated_at: new Date().toISOString(),
-        })
-        .eq("id", paymentData.external_reference)
-
+    if (!paymentId || (topic && topic !== "payment")) {
       return NextResponse.json({ received: true })
+    }
+
+    const payment = new Payment(getMercadoPagoClient())
+    const paymentData = await payment.get({ id: paymentId })
+    const orderId = paymentData.external_reference
+
+    if (!orderId) {
+      return NextResponse.json({ received: true })
+    }
+
+    const supabase = await createClient()
+    const { error } = await supabase
+      .from("orders")
+      .update({
+        status: mapPaymentStatus(paymentData.status),
+        mercadopago_payment_id: String(paymentId),
+        updated_at: new Date().toISOString(),
+      })
+      .eq("id", orderId)
+
+    if (error) {
+      console.error("Error updating order from Mercado Pago webhook:", error)
+      return NextResponse.json({ error: "Order update error" }, { status: 500 })
     }
 
     return NextResponse.json({ received: true })

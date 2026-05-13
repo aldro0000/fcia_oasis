@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Phone, Mail, MapPin, Instagram, MessageCircle } from "lucide-react";
 
@@ -9,8 +10,15 @@ export function Footer() {
           {/* Brand */}
           <div className="space-y-4">
             <div className="flex items-center gap-3">
-              <div className="flex size-10 items-center justify-center rounded-full bg-primary">
-                <span className="text-lg font-bold text-primary-foreground">O</span>
+              <div className="relative size-12 overflow-hidden rounded-full bg-background ring-1 ring-background/20">
+                <Image
+                  src="/api/assets/logo"
+                  alt="Farmacia Oasis"
+                  fill
+                  className="object-contain p-1"
+                  sizes="48px"
+                  unoptimized
+                />
               </div>
               <div>
                 <p className="font-bold">Farmacia Oasis</p>

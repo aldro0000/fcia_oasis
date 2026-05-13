@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { useCartStore } from "@/lib/cart-store"
+import { getProductImagePath } from "@/lib/assets/product-image-paths"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -20,7 +21,7 @@ interface ShippingOption {
 }
 
 export function CheckoutForm() {
-  const { items, getTotalPrice, clearCart } = useCartStore()
+  const { items, getSubtotal, clearCart } = useCartStore()
   const [isLoading, setIsLoading] = useState(false)
   const [mounted, setMounted] = useState(false)
   const [selectedShipping, setSelectedShipping] = useState<ShippingOption | null>(null)
@@ -66,7 +67,7 @@ export function CheckoutForm() {
     )
   }
 
-  const subtotal = getTotalPrice()
+  const subtotal = getSubtotal()
   const shippingCost = selectedShipping?.cost ?? 0
   const total = subtotal + shippingCost
 
@@ -92,9 +93,7 @@ export function CheckoutForm() {
         body: JSON.stringify({
           items: items.map((item) => ({
             productId: item.product.id,
-            productName: item.product.name,
             quantity: item.quantity,
-            unitPrice: item.product.promotional_price || item.product.price,
           })),
           customer: {
             name: formData.name,
@@ -114,8 +113,6 @@ export function CheckoutForm() {
             method: selectedShipping.method,
             cost: selectedShipping.cost,
           },
-          subtotal,
-          total,
         }),
       })
 
@@ -159,15 +156,19 @@ export function CheckoutForm() {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              {items.map((item) => (
+              {items.map((item) => {
+                const imageUrl = item.product.image_url || getProductImagePath(item.product.slug)
+
+                return (
                 <div key={item.product.id} className="flex gap-3">
                   <div className="relative h-16 w-16 overflow-hidden rounded-lg bg-muted">
-                    {item.product.image_url ? (
+                    {imageUrl ? (
                       <Image
-                        src={item.product.image_url}
+                        src={imageUrl}
                         alt={item.product.name}
                         fill
                         className="object-cover"
+                        unoptimized
                       />
                     ) : (
                       <div className="flex h-full items-center justify-center text-muted-foreground">
@@ -190,7 +191,8 @@ export function CheckoutForm() {
                     )}
                   </p>
                 </div>
-              ))}
+                )
+              })}
 
               <Separator />
 
