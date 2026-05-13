@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ShoppingCart, ShoppingBag } from "lucide-react";
+import { MessageCircle, ShoppingCart, ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -22,8 +22,11 @@ export function ProductCard({ product }: ProductCardProps) {
   const discountPercent = hasDiscount
     ? Math.round(((product.price - product.promotional_price!) / product.price) * 100)
     : 0;
+  const canBuyOnline = currentPrice > 0 && product.stock > 0;
 
   const handleAddToCart = () => {
+    if (!canBuyOnline) return;
+
     addItem(product);
     toast({
       title: "Producto agregado",
@@ -41,6 +44,7 @@ export function ProductCard({ product }: ProductCardProps) {
             alt={product.name}
             fill
             className="object-cover transition-transform group-hover:scale-105"
+            unoptimized
           />
         ) : (
           <div className="flex size-full items-center justify-center bg-accent">
@@ -68,22 +72,43 @@ export function ProductCard({ product }: ProductCardProps) {
         )}
         
         <div className="mt-auto flex items-baseline gap-2">
-          <span className="text-lg font-bold text-primary">
-            {formatPrice(currentPrice)}
-          </span>
-          {hasDiscount && (
-            <span className="text-sm text-muted-foreground line-through">
-              {formatPrice(product.price)}
+          {canBuyOnline ? (
+            <>
+              <span className="text-lg font-bold text-primary">
+                {formatPrice(currentPrice)}
+              </span>
+              {hasDiscount && (
+                <span className="text-sm text-muted-foreground line-through">
+                  {formatPrice(product.price)}
+                </span>
+              )}
+            </>
+          ) : (
+            <span className="text-sm font-semibold text-primary">
+              Consultar precio
             </span>
           )}
         </div>
       </CardContent>
       
       <CardFooter className="p-4 pt-0">
-        <Button onClick={handleAddToCart} className="w-full gap-2" size="sm">
-          <ShoppingCart className="size-4" />
-          Agregar
-        </Button>
+        {canBuyOnline ? (
+          <Button onClick={handleAddToCart} className="w-full gap-2" size="sm">
+            <ShoppingCart className="size-4" />
+            Agregar
+          </Button>
+        ) : (
+          <Button asChild className="w-full gap-2" size="sm" variant="outline">
+            <a
+              href={`https://wa.me/541153324146?text=${encodeURIComponent(`Hola, quiero consultar por ${product.name}`)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <MessageCircle className="size-4" />
+              Consultar
+            </a>
+          </Button>
+        )}
       </CardFooter>
     </Card>
   );

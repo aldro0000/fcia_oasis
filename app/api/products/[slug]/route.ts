@@ -1,21 +1,14 @@
-import { createClient } from "@/lib/supabase/server"
 import { NextResponse } from "next/server"
+import { getActiveProductBySlug } from "@/lib/products"
 
 export async function GET(
   request: Request,
   { params }: { params: Promise<{ slug: string }> }
 ) {
   const { slug } = await params
-  const supabase = await createClient()
+  const product = await getActiveProductBySlug(slug)
 
-  const { data: product, error } = await supabase
-    .from("products")
-    .select("*")
-    .eq("slug", slug)
-    .eq("is_active", true)
-    .single()
-
-  if (error) {
+  if (!product) {
     return NextResponse.json({ error: "Producto no encontrado" }, { status: 404 })
   }
 

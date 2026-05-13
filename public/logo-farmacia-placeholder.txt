@@ -1,0 +1,1 @@
+El script scripts/copy-product-images.ps1 copia LOGO FARMACIA.webp desde C:\fotos web fcia y lo deja como public/logo-farmacia.webp.
