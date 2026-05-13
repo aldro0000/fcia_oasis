@@ -4,6 +4,10 @@ function normalizeUrl(url: string) {
   return url.replace(/\/$/, "")
 }
 
+export function hasMercadoPagoAccessToken() {
+  return Boolean(process.env.MERCADOPAGO_ACCESS_TOKEN)
+}
+
 export function getMercadoPagoClient() {
   const accessToken = process.env.MERCADOPAGO_ACCESS_TOKEN
 

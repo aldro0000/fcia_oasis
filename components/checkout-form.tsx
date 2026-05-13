@@ -118,15 +118,20 @@ export function CheckoutForm() {
 
       const data = await response.json()
 
+      if (!response.ok) {
+        throw new Error(data.error || "Error al procesar el pedido")
+      }
+
       if (data.initPoint) {
         clearCart()
         window.location.href = data.initPoint
       } else {
-        throw new Error(data.error || "Error al procesar el pago")
+        throw new Error(data.error || "Error al procesar el pedido")
       }
     } catch (error) {
       console.error("Error:", error)
-      alert("Error al procesar el pago. Por favor intenta nuevamente.")
+      const message = error instanceof Error ? error.message : "Error al procesar el pedido"
+      alert(`${message}. Por favor intenta nuevamente o escribinos por WhatsApp.`)
     } finally {
       setIsLoading(false)
     }
@@ -186,7 +191,7 @@ export function CheckoutForm() {
                   </div>
                   <p className="text-sm font-medium">
                     {formatPrice(
-                      (item.product.promotional_price || item.product.price) *
+                      (item.product.promotional_price ?? item.product.price) *
                         item.quantity
                     )}
                   </p>
@@ -381,13 +386,12 @@ export function CheckoutForm() {
                 ) : (
                   <>
                     <CreditCard className="mr-2 h-4 w-4" />
-                    Pagar con Mercado Pago - {formatPrice(total)}
+                    Confirmar pedido - {formatPrice(total)}
                   </>
                 )}
               </Button>
               <p className="mt-4 text-center text-sm text-muted-foreground">
-                Serás redirigido a Mercado Pago para completar tu pago de forma
-                segura
+                Si Mercado Pago está configurado, vas a pagar de forma segura. Si no, te redirigimos a WhatsApp para confirmar el pedido.
               </p>
             </CardContent>
           </Card>

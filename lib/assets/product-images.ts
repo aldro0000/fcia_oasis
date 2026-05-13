@@ -82,8 +82,6 @@ const ASSET_DIRECTORIES = [
   "public/products",
   "public/FOTOS WEB FCIA",
   "public/fotos web fcia",
-  "FOTOS WEB FCIA",
-  "fotos web fcia",
 ]
 
 function getContentType(filePath: string) {
@@ -113,13 +111,16 @@ async function findLooseMatch(directory: string, names: string[]) {
   }
 }
 
+function assetPath(...segments: string[]) {
+  return path.join(/*turbopackIgnore: true*/ process.cwd(), ...segments)
+}
+
 export async function findProductImage(slug: string) {
-  const root = process.cwd()
   const fileNames = PRODUCT_IMAGE_FILES[slug] ?? [`${slug}.webp`]
 
   for (const directory of ASSET_DIRECTORIES) {
     for (const fileName of fileNames) {
-      const filePath = path.join(root, directory, fileName)
+      const filePath = assetPath(directory, fileName)
       if (await fileExists(filePath)) {
         return {
           buffer: await fs.readFile(filePath),
@@ -128,9 +129,9 @@ export async function findProductImage(slug: string) {
       }
     }
 
-    const looseMatch = await findLooseMatch(path.join(root, directory), fileNames)
+    const looseMatch = await findLooseMatch(assetPath(directory), fileNames)
     if (looseMatch) {
-      const filePath = path.join(root, directory, looseMatch)
+      const filePath = assetPath(directory, looseMatch)
       return {
         buffer: await fs.readFile(filePath),
         contentType: getContentType(filePath),
@@ -142,7 +143,6 @@ export async function findProductImage(slug: string) {
 }
 
 export async function findLogoImage() {
-  const root = process.cwd()
   const logoFiles = [
     "logo-farmacia.webp",
     "LOGO FARMACIA.webp",
@@ -150,11 +150,11 @@ export async function findLogoImage() {
     "logofcia.png",
     "logo.png",
   ]
-  const directories = ["public", "public/products", "public/FOTOS WEB FCIA", "public/fotos web fcia", "FOTOS WEB FCIA", "fotos web fcia", "."]
+  const directories = ["public", "public/products", "public/FOTOS WEB FCIA", "public/fotos web fcia"]
 
   for (const directory of directories) {
     for (const fileName of logoFiles) {
-      const filePath = path.join(root, directory, fileName)
+      const filePath = assetPath(directory, fileName)
       if (await fileExists(filePath)) {
         return {
           buffer: await fs.readFile(filePath),
