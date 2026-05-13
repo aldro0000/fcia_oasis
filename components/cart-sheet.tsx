@@ -12,6 +12,7 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { useCartStore } from "@/lib/cart-store";
+import { getProductImagePath } from "@/lib/assets/product-image-paths";
 import { formatPrice } from "@/lib/utils";
 
 interface CartSheetProps {
@@ -53,18 +54,20 @@ export function CartSheet({ open, onOpenChange }: CartSheetProps) {
                 {items.map((item) => {
                   const price =
                     item.product.promotional_price ?? item.product.price;
+                  const imageUrl = item.product.image_url || getProductImagePath(item.product.slug);
                   return (
                     <div
                       key={item.product.id}
                       className="flex gap-4 rounded-xl border bg-card p-3"
                     >
                       <div className="relative size-20 shrink-0 overflow-hidden rounded-lg bg-muted">
-                        {item.product.image_url ? (
+                        {imageUrl ? (
                           <Image
-                            src={item.product.image_url}
+                            src={imageUrl}
                             alt={item.product.name}
                             fill
                             className="object-cover"
+                            unoptimized
                           />
                         ) : (
                           <div className="flex size-full items-center justify-center text-2xl text-muted-foreground">

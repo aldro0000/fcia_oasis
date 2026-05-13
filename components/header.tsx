@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { Menu, X, ShoppingCart } from "lucide-react";
@@ -24,8 +25,15 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <nav className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 lg:px-8">
         <Link href="/" className="flex items-center gap-3">
-          <div className="flex size-10 items-center justify-center rounded-full bg-primary shadow-md">
-            <span className="text-lg font-bold text-primary-foreground">O</span>
+          <div className="relative size-12 overflow-hidden rounded-full bg-background shadow-md ring-1 ring-border">
+            <Image
+              src="/api/assets/logo"
+              alt="Farmacia Oasis"
+              fill
+              className="object-contain p-1"
+              sizes="48px"
+              unoptimized
+            />
           </div>
           <div className="hidden sm:block">
             <p className="text-base font-bold text-primary">Farmacia Oasis</p>
